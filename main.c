@@ -16,7 +16,11 @@ void ParsearDireccion(unsigned int addr, int *ETQ, int *palabra, int *linea, int
 void TratarFallo(T_CACHE_LINE *tbl, char *MRAM, int ETQ, int linea, int bloque);
 
 int main(){
-
+    int globaltime = 0;
+    int numFallos = 0;
+    unsigned char Simul_Ram[4096];
+    T_CACHE_LINE Cache[NUM_FILAS];
+    
 
 
 
