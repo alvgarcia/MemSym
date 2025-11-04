@@ -3,6 +3,7 @@
 #include <string.h>
 
 #define TAM_LINEA 16
+#define NUM_FILAS 8 
 
 
 typedef struct {
@@ -21,7 +22,18 @@ int main(){
     unsigned char Simul_Ram[4096];
     T_CACHE_LINE Cache[NUM_FILAS];
     
-
+    for (int i = 0; i<NUM_FILAS -1 ; i++){
+         Cache[i].ETQ = 0xFF; 
+         for(int j = 0; j < TAM_LINEA - 1; j++){
+            Cache[i].Data[j] = 0x23;
+         }
+    }
+   for (int i = 0; i<NUM_FILAS -1 ; i++){
+        printf("\n%x\tDatos:",Cache[i].ETQ); 
+         for(int j = 0; j < TAM_LINEA - 1; j++){
+            printf("%x\t",Cache[i].Data[j]);
+         }
+    }
 
 
     return 0;
