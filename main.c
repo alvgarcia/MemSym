@@ -38,3 +38,11 @@ int main(){
 
     return 0;
 }
+
+void LimpiarCACHE(T_CACHE_LINE tbl[NUM_FILAS]){
+   for (int i = 0; i < NUM_FILAS; i++){
+      for (int j = 0; j <TAM_LINEA; j++){
+         tbl[i].Data[j] = 0x00;
+      }
+    }
+}
