@@ -22,8 +22,15 @@ int main(){
    unsigned char Simul_Ram[4096];
    T_CACHE_LINE Cache[NUM_FILAS];
    LimpiarCACHE(Cache);
+   FILE *fr;
+   fr=fopen("CONTENTS_RAM.bin","rb");
+   fgets(Simul_Ram,4096,fr);
+   fclose(fr);
+   //fr=fopen("CONTENTS_CACHE.bin","r");
+   //ParsearDireccion(addr, *ETQ,  *palabra, *linea, *bloque);
 
 
+   VolcarCACHE(Cache);
    return 0;
 }
 
@@ -45,6 +52,7 @@ void VolcarCACHE(T_CACHE_LINE *tbl){
       }
       putc("\n",fd);
    }
+   fclose(fd);
 }
 
 void ParsearDireccion(unsigned int addr, int *ETQ, int *palabra, int *linea, int *bloque){
