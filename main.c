@@ -29,9 +29,28 @@ int main(){
 
 void LimpiarCACHE(T_CACHE_LINE tbl[NUM_FILAS]){
    for (int i = 0; i<NUM_FILAS -1 ; i++){
-      Cache[i].ETQ = 0xFF; 
+      tbl[i].ETQ = 0xFF; 
       for(int j = 0; j < TAM_LINEA - 1; j++){
-         Cache[i].Data[j] = 0x23;
+         tbl[i].Data[j] = 0x23;
       }
    }
+}
+
+void VolcarCACHE(T_CACHE_LINE *tbl){
+   FILE *fd;
+   fd=fopen("CONTENTS_CACHE.bin","wb");
+   for (int i = 0; i<NUM_FILAS -1 ; i++){
+      for(int j = 0; j < TAM_LINEA - 1; j++){
+         putc(tbl[i].Data[j],fd);
+      }
+      putc("\n",fd);
+   }
+}
+
+void ParsearDireccion(unsigned int addr, int *ETQ, int *palabra, int *linea, int *bloque){
+
+}
+
+void TratarFallo(T_CACHE_LINE *tbl, char *MRAM, int ETQ, int linea, int bloque){
+
 }
