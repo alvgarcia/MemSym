@@ -17,32 +17,21 @@ void ParsearDireccion(unsigned int addr, int *ETQ, int *palabra, int *linea, int
 void TratarFallo(T_CACHE_LINE *tbl, char *MRAM, int ETQ, int linea, int bloque);
 
 int main(){
-    int globaltime = 0;
-    int numFallos = 0;
-    unsigned char Simul_Ram[4096];
-    T_CACHE_LINE Cache[NUM_FILAS];
-    
-    for (int i = 0; i<NUM_FILAS -1 ; i++){
-         Cache[i].ETQ = 0xFF; 
-         for(int j = 0; j < TAM_LINEA - 1; j++){
-            Cache[i].Data[j] = 0x23;
-         }
-    }
-   for (int i = 0; i<NUM_FILAS -1 ; i++){
-        printf("\n%x\tDatos:",Cache[i].ETQ); 
-         for(int j = 0; j < TAM_LINEA - 1; j++){
-            printf("%x\t",Cache[i].Data[j]);
-         }
-    }
+   int globaltime = 0;
+   int numFallos = 0;
+   unsigned char Simul_Ram[4096];
+   T_CACHE_LINE Cache[NUM_FILAS];
+   LimpiarCACHE(Cache);
 
 
-    return 0;
+   return 0;
 }
 
 void LimpiarCACHE(T_CACHE_LINE tbl[NUM_FILAS]){
-   for (int i = 0; i < NUM_FILAS; i++){
-      for (int j = 0; j <TAM_LINEA; j++){
-         tbl[i].Data[j] = 0x00;
+   for (int i = 0; i<NUM_FILAS -1 ; i++){
+      Cache[i].ETQ = 0xFF; 
+      for(int j = 0; j < TAM_LINEA - 1; j++){
+         Cache[i].Data[j] = 0x23;
       }
-    }
+   }
 }
