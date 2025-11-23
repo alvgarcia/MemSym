@@ -26,20 +26,13 @@ int main(){
    int palabra;
    int linea;
    int bloque;
-<<<<<<< HEAD
-
-=======
->>>>>>> 78a84c9983f8aaaadd721a1559966ce173de1de3
    LimpiarCACHE(Cache);
    FILE *fr;
    fr=fopen("CONTENTS_RAM.bin","rb");
    fgets(Simul_Ram,4096,fr);
    fclose(fr);
    fr=fopen("CONTENTS_CACHE.bin","r");
-<<<<<<< HEAD
    fscanf(fr, "%x", &addr);
-=======
->>>>>>> 78a84c9983f8aaaadd721a1559966ce173de1de3
    ParsearDireccion(addr, &ETQ,  &palabra, &linea, &bloque);
 
 
