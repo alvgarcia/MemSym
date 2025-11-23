@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #define TAM_LINEA 16
 #define NUM_FILAS 8 
@@ -35,6 +36,10 @@ int main(){
    fscanf(fr, "%x", &addr);
    ParsearDireccion(addr, &ETQ,  &palabra, &linea, &bloque);
 
+   if(ETQ == Cache[linea].ETQ && Cache[linea].ETQ != 0xFF){
+      printf("T: %d, Acierto de CACHE, ADDR %04X Label %X linea %02X palabra %02X DATO %02X \n", globaltime, addr, ETQ, linea, palabra, /*aqui va el dato*/);
+
+   }
 
    VolcarCACHE(Cache);
    return 0;
