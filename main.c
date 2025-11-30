@@ -62,11 +62,11 @@ int main(){
       }
       sleep(1);
    }
-   printf("Accesos totales: %d; fallos: %d; Tiempo medio: %d\n",numAciertos,numFallos,(numFallos/numAciertos)*20);
+   printf("Accesos totales: %d; fallos: %d; Tiempo medio: %f\n",numAciertos,numFallos,(numFallos/numAciertos)*20);
    leido[numAciertos]='\0';
    printf("Texto leido: ");
    for(int i=0;i<numAciertos;i++){
-      printf("%c ",leido[i]);
+      printf("%c",leido[i]);
    }
    VolcarCACHE(Cache);
    return 0;
@@ -102,9 +102,6 @@ void ParsearDireccion(unsigned int addr, int *ETQ, int *palabra, int *linea, int
 
 void TratarFallo(T_CACHE_LINE *tbl, char *MRAM, int ETQ, int linea, int bloque){
    tbl[linea].ETQ=ETQ;
-   for(int i=0;i<TAM_LINEA;i++){
-	   tbl[linea].Data[i]=MRAM[bloque*TAM_LINEA+i];   
-   }
-   //memcpy(tbl[linea].Data, MRAM + (bloque*TAM_LINEA), TAM_LINEA);
+   memcpy(tbl[linea].Data, MRAM + (bloque*TAM_LINEA), TAM_LINEA);
    printf("Cargando el bloque %02X en la linea %02X\n",bloque,linea);
 }
