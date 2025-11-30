@@ -38,9 +38,9 @@ int main(){
    }
    fgets(Simul_Ram,4096,fr);
    fclose(fr);
-   fr=fopen("CONTENTS_CACHE.bin","r");
+   fr=fopen("accesos_memoria.txt","r");
    if(!fr){
-      printf("Error abriendo CONTENTS_CACHE.BIN");
+      printf("Error abriendo accesos_memoria.txt");
       return -1;
    }
    while((fscanf(fr, "%x", &addr))==1){
