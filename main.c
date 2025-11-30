@@ -102,6 +102,8 @@ void ParsearDireccion(unsigned int addr, int *ETQ, int *palabra, int *linea, int
 
 void TratarFallo(T_CACHE_LINE *tbl, char *MRAM, int ETQ, int linea, int bloque){
    tbl[linea].ETQ=ETQ;
-   memcpy(tbl[linea].Data, MRAM + (bloque*TAM_LINEA), TAM_LINEA);
+   for(int i=0;i<TAM_LINEA;i++){
+	   tbl[linea].Data[i]=MRAM[bloque*TAM_LINEA+i];   
+   }
    printf("Cargando el bloque %02X en la linea %02X\n",bloque,linea);
 }
