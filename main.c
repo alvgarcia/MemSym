@@ -47,7 +47,7 @@ int main(){
       ParsearDireccion(addr, &ETQ,  &palabra, &linea, &bloque);
       if(ETQ != Cache[linea].ETQ){
          numFallos+=1;
-         printf("T: %d, Fallo de CACHE %d, ADDR %04X Label %X linea %02X palabra %02X bloque %02X",globaltime,numFallos,addr,ETQ,linea,bloque);
+         printf("T: %d, Fallo de CACHE %d, ADDR %04X Label %X linea %02X palabra %02X bloque %02X",globaltime,numFallos,addr,ETQ,linea,palabra,bloque);
          globaltime+=20;
          TratarFallo(Cache, (char *) Simul_Ram, ETQ, linea, bloque);          
       }
@@ -62,8 +62,8 @@ int main(){
       }
       sleep(1);
    }
-   printf("Accesos totales: %d; fallos: %d; Tiempo medio: %d",numAciertos,numFallos,(numFallos/numAciertos)*20);
-   leido[numAciertos]="\0";
+   printf("Accesos totales: %d; fallos: %d; Tiempo medio: %d\n",numAciertos,numFallos,(numFallos/numAciertos)*20);
+   leido[numAciertos]='\0';
    printf("Texto leido: %s",leido);
    VolcarCACHE(Cache);
    return 0;
@@ -85,7 +85,7 @@ void VolcarCACHE(T_CACHE_LINE *tbl){
       for(int j = 0; j < TAM_LINEA; j++){
          putc(tbl[i].Data[j],fd);
       }
-      putc("\n",fd);
+      putc('\n',fd);
    }
    fclose(fd);
 }
@@ -99,6 +99,6 @@ void ParsearDireccion(unsigned int addr, int *ETQ, int *palabra, int *linea, int
 
 void TratarFallo(T_CACHE_LINE *tbl, char *MRAM, int ETQ, int linea, int bloque){
    tbl[linea].ETQ=ETQ;
-   memcpy(tbl[linea].Data, MRAM[bloque*TAM_LINEA], TAM_LINEA);
+   memcpy(tbl[linea].Data, MRAM + (bloque*TAM_LINEA), TAM_LINEA);
    printf("Cargando el bloque %02X en la linea %02X\n",bloque,linea);
 }
