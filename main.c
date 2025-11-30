@@ -12,17 +12,19 @@ unsigned char ETQ;
 unsigned char Data[TAM_LINEA];
 } T_CACHE_LINE;
 
+int globaltime = 0;
+int numFallos = 0;
+unsigned char Simul_Ram[4096];
+char leido[100];
+
 void LimpiarCACHE(T_CACHE_LINE tbl[NUM_FILAS]);
 void VolcarCACHE(T_CACHE_LINE *tbl);
 void ParsearDireccion(unsigned int addr, int *ETQ, int *palabra, int *linea, int *bloque);
 void TratarFallo(T_CACHE_LINE *tbl, char *MRAM, int ETQ, int linea, int bloque);
 
 int main(){
-   int globaltime = 0;
-   int numFallos = 0;
    int numAciertos=0;
-   unsigned char Simul_Ram[4096];
-   char leido[100];
+   float tMedio;
    T_CACHE_LINE Cache[NUM_FILAS];
    unsigned int addr;
    int ETQ;
@@ -36,7 +38,7 @@ int main(){
       printf("Error abriendo CONTENTS_RAM.BIN");
       return -1;
    }
-   fgets(Simul_Ram,4096,fr);
+   fread(Simul_Ram,sizeof (unsigned char),4096,fr);
    fclose(fr);
    fr=fopen("accesos_memoria.txt","r");
    if(!fr){
@@ -62,8 +64,9 @@ int main(){
       }
       sleep(1);
    }
-   printf("Accesos totales: %d; fallos: %d; Tiempo medio: %f\n",numAciertos,numFallos,(numFallos/numAciertos)*20);
-   leido[numAciertos]='\0';
+   fclose(fr);
+   tMedio=(float)globaltime/(float)numAciertos;
+   printf("Accesos totales: %d; fallos: %d; Tiempo medio: %f\n",numAciertos,numFallos,tMedio);
    printf("Texto leido: ");
    for(int i=0;i<numAciertos;i++){
       printf("%c",leido[i]);
