@@ -37,8 +37,11 @@ int main(){
    ParsearDireccion(addr, &ETQ,  &palabra, &linea, &bloque);
 
    if(ETQ == Cache[linea].ETQ && Cache[linea].ETQ != 0xFF){
-      printf("T: %d, Acierto de CACHE, ADDR %04X Label %X linea %02X palabra %02X DATO %02X \n", globaltime, addr, ETQ, linea, palabra, /*aqui va el dato*/);
-
+      printf("T: %d, Acierto de CACHE, ADDR %04X Label %X linea %02X palabra %02X DATO %s \n", globaltime, addr, ETQ, linea, palabra, Cache[linea].Data);
+   }
+   else{
+      TratarFallo(Cache, (char *) Simul_Ram, &ETQ, &linea, &bloque);
+      printf("T: %d, Acierto de CACHE, ADDR %04X Label %X linea %02X palabra %02X DATO %s \n", globaltime, addr, ETQ, linea, palabra, Cache[linea].Data);
    }
 
    VolcarCACHE(Cache);
@@ -48,7 +51,7 @@ int main(){
 void LimpiarCACHE(T_CACHE_LINE tbl[NUM_FILAS]){
    for (int i = 0; i<NUM_FILAS; i++){
       tbl[i].ETQ = 0xFF; 
-      for(int j = 0; j < TAM_LINEA - 1; j++){
+      for(int j = 0; j < TAM_LINEA; j++){
          tbl[i].Data[j] = 0x23;
       }
    }
@@ -58,7 +61,7 @@ void VolcarCACHE(T_CACHE_LINE *tbl){
    FILE *fd;
    fd=fopen("CONTENTS_CACHE.bin","wb");
    for (int i = 0; i<NUM_FILAS; i++){
-      for(int j = 0; j < TAM_LINEA - 1; j++){
+      for(int j = 0; j < TAM_LINEA; j++){
          putc(tbl[i].Data[j],fd);
       }
       putc("\n",fd);
@@ -74,5 +77,6 @@ void ParsearDireccion(unsigned int addr, int *ETQ, int *palabra, int *linea, int
 }
 
 void TratarFallo(T_CACHE_LINE *tbl, char *MRAM, int ETQ, int linea, int bloque){
+   tbl[linea].ETQ=ETQ;
 
 }
